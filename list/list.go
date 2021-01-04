@@ -31,8 +31,7 @@ func (l *List) Round(action func(data interface{}) interface{}) {
 	tmp := l.head
 
 	for l.head != nil {
-		tmp := action(l.head.data)
-		l.head.data = tmp
+		l.head.data = action(l.head.data)
 		l.head = l.head.next
 	}
 
