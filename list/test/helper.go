@@ -24,10 +24,11 @@ func AssertIntEqual(t *testing.T, a int, b int) {
 }
 
 func AssertListsEqual(t *testing.T, a *list.List, b *list.List) {
-	a.Round(func(data interface{}) {
+	a.Round(func(data interface{}) interface{} {
 		if !b.Contains(data) {
 			t.Fatalf("%v not in second list", data)
 		}
+		return data
 	})
 
 	AssertIntEqual(t, a.GetLength(), b.GetLength())
