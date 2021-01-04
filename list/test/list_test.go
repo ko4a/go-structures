@@ -55,3 +55,19 @@ func TestPrepend(t *testing.T) {
 	AssertNodeNotEqual(t, l.GetHead(), l.GetTail())
 	AssertIntEqual(t, l.GetHead().GetData().(int), 2)
 }
+
+func TestReverse(t *testing.T)  {
+	l := list.New()
+	lTest := list.New()
+
+	l.Append(1)
+	l.Append(2)
+	l.Append(3)
+
+	lTest.Prepend(1)
+	lTest.Prepend(2)
+	lTest.Prepend(3)
+
+	lTest.Reverse()
+	AssertListsEqual(t, l, lTest)
+}

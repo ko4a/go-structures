@@ -27,6 +27,33 @@ func (l *List) GetLength() int {
 	return l.length
 }
 
+func (l *List) Round(action func(data interface{}) interface{}) {
+	tmp := l.head
+
+	for l.head != nil {
+		tmp := action(l.head.data)
+		l.head.data = tmp
+		l.head = l.head.next
+	}
+
+	l.head = tmp
+}
+
+func (l *List) Contains(data interface{}) bool {
+	tmp := l.head
+	res := false
+
+	for l.head != nil {
+		if l.head.data == data {
+			res = true
+		}
+		l.head = l.head.next
+	}
+	l.head = tmp
+
+	return res
+}
+
 func (l *List) Append(data interface{}) {
 	node := &Node{data, nil}
 
@@ -64,12 +91,14 @@ func (l *List) GetTail() *Node {
 
 func (l *List) Print() {
 	head := l.head
+	tmp := head
 
 	for head != nil {
 		fmt.Printf("%v\n", head.data)
 		head = head.next
 	}
 
+	l.head = tmp
 }
 
 func (l *List) Reverse() {
@@ -79,17 +108,18 @@ func (l *List) Reverse() {
 
 	curr := l.head.next
 	prev := l.head
+	prev.next = nil
+	l.tail = prev
 
 	for curr != nil {
-		l.head = curr
+		tmp := curr
+		l.tail = curr
 		curr = curr.next
-		l.head.next = prev
-		prev = prev.next
+		tmp.next = prev
+		prev = tmp
 	}
 
-
-
-	fmt.Println()
+	l.head = prev
 }
 
 func (l *List) insertEmpty(n *Node) {

@@ -22,3 +22,13 @@ func AssertIntEqual(t *testing.T, a int, b int) {
 		t.Fatalf("expected %d, but got %d", a, b)
 	}
 }
+
+func AssertListsEqual(t *testing.T, a *list.List, b *list.List) {
+	a.Round(func(data interface{}) {
+		if !b.Contains(data) {
+			t.Fatalf("%v not in second list", data)
+		}
+	})
+
+	AssertIntEqual(t, a.GetLength(), b.GetLength())
+}
